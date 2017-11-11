@@ -5,10 +5,6 @@ openldap_admin_user: 'admin'
 openldap_base: 'dc=lanathome,dc=com'
 openldap_bind_id: 'cn={{ openldap_bind_user }},{{ openldap_base }}'
 openldap_bind_user: '{{ openldap_admin_user }}'
-openldap_debian_packages:
-  - slapd
-  - ldap-utils
-  - phpldapadmin
 openldap_organizationalunits:  #defines OU's to populate
   - People
   - Groups
