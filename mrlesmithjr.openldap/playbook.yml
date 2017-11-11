@@ -1,9 +1,0 @@
----
-- hosts: all
-  become: true
-  vars:
-    - openldap_base: 'dc=lanathome,dc=com'
-    - pri_domain_name: lanathome.com
-  roles:
-    - role: ansible-etc-hosts
-    - role: ansible-openldap
