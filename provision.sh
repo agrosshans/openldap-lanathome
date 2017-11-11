@@ -1,7 +1,7 @@
 #!/bin/bash
 if [ -f /etc/debian_version ]; then
   sudo apt-get update
-  sudo apt-get install -y git python-pip python-dev
+  sudo apt-get install -y git python-pip python-dev ansible
   sudo apt-get update
   sudo apt-get install software-properties-common
   sudo apt-add-repository ppa:ansible/ansible
