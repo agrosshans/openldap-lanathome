@@ -13,5 +13,5 @@ elif [ -f /etc/redhat-release ]; then
   yum install -y git python-pip python-devel python-dnf
 fi
 sudo pip install ansible
-cd roles/ ; git clone git@github.com:agrosshans/openldap.git
+cd roles/ ; git clone https://github.com/agrosshans/openldap-lanathome.git
 ansible-playbook -i "localhost," -c local /vagrant/playbook.yml
