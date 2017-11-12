@@ -131,3 +131,88 @@
   when: >
         openldap_populate is defined and
         openldap_populate
+
+
+- name: Create user mly
+  ldap_entry:
+    dn: uid=mly,ou=People,dc=lanathome,dc=com
+    objectClass:
+      - inetOrgPerson
+      - posixAccount
+      - shadowAccount
+    attributes:
+      cn: myl
+      displayname: Marie-Laure Leroy
+      gecos: Marie-Laure Leroy
+      gidnumber: 5001
+      givenname: Marie-Laure
+      homedirectory: /home/mly
+      loginshell: /bin/bash
+      sn: Leroy
+      uid: mly
+      uidnumber: 10002
+      userpassword: 4eathqme!
+    server_uri:   ldapi:///localhost
+    bind_dn: "{{ openldap_bind_id }}"
+    bind_pw: "{{ openldap_admin_password }}"
+    state: present
+  ignore_errors: yes  #set to get around erroring out that items already exist
+  when: >
+        openldap_populate is defined and
+        openldap_populate
+
+- name: Create user mgr
+  ldap_entry:
+    dn: uid=mgr,ou=People,dc=lanathome,dc=com
+    objectClass:
+      - inetOrgPerson
+      - posixAccount
+      - shadowAccount
+    attributes:
+      cn: mgr
+      displayname: Maxime Grosshans
+      gecos: Maxime Grosshans
+      gidnumber: 5002
+      givenname: Maxime
+      homedirectory: /home/mgr
+      loginshell: /bin/bash
+      sn: Grosshans
+      uid: mgr
+      uidnumber: 10003
+      userpassword: 4eathqme!
+    server_uri:   ldapi:///localhost
+    bind_dn: "{{ openldap_bind_id }}"
+    bind_pw: "{{ openldap_admin_password }}"
+    state: present
+  ignore_errors: yes  #set to get around erroring out that items already exist
+  when: >
+        openldap_populate is defined and
+        openldap_populate
+
+- name: Create user lgr
+  ldap_entry:
+    dn: uid=lgr,ou=People,dc=lanathome,dc=com
+    objectClass:
+      - inetOrgPerson
+      - posixAccount
+      - shadowAccount
+    attributes:
+      cn: lgr
+      displayname: Louise Grosshans
+      gecos: Louise Grosshans
+      gidnumber: 5004
+      givenname: Louise
+      homedirectory: /home/lgr
+      loginshell: /bin/bash
+      sn: Grosshans
+      uid: lgr
+      uidnumber: 10004
+      userpassword: 4eathqme!
+    server_uri:   ldapi:///localhost
+    bind_dn: "{{ openldap_bind_id }}"
+    bind_pw: "{{ openldap_admin_password }}"
+    state: present
+  ignore_errors: yes  #set to get around erroring out that items already exist
+  when: >
+        openldap_populate is defined and
+        openldap_populate
