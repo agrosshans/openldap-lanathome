@@ -123,6 +123,10 @@
       uid: ngr
       uidnumber: 10001
       userpassword: 4eathqme!
+    server_uri:   ldapi:///localhost
+    bind_dn: "{{ openldap_bind_id }}"
+    bind_pw: "{{ openldap_admin_password }}"
+    state: present
   ignore_errors: yes  #set to get around erroring out that items already exist
   when: >
         openldap_populate is defined and
