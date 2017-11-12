@@ -106,7 +106,7 @@
 
 - name: Create SUDOers
   ldap_entry:
-    dn: ou=SUDOers,dc=example,dc=com
+    dn: ou=SUDOers,dc=lanathome,dc=com
     objectClass: 
       - top
       - organizationalUnit
