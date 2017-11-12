@@ -51,7 +51,7 @@
   ignore_errors: yes  #set to get around erroring out that items already exist
   when: >
         openldap_populate is defined and
-        openldap_populate                                                                                                                                                                              40,1          Bot
+        openldap_populate
 
 - name: Create saunix group
   ldap_entry:
