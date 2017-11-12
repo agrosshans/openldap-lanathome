@@ -38,13 +38,12 @@
 
 - name: Make sure we have a parent entry for groups
   ldap_entry:
-    dn: cn=Groups,dc=lanathome,dc=com
+    dn: ou=Groups,dc=lanathome,dc=com
     objectClass:
-      - posixGroup
+      - organizationalUnit
       - top
     attributes:
-      cn: Groups
-      gidnumber: 5000
+      ou: Groups
     server_uri:   ldapi:///localhost
     bind_dn: "{{ openldap_bind_id }}"
     bind_pw: "{{ openldap_admin_password }}"
