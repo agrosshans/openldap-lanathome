@@ -59,9 +59,11 @@
 - name: Create saunix group
   ldap_entry:
     dn: cn=saunix,ou=Groups,dc=lanathome,dc=com
-    cn: saunix
-    gidnumber: 5001
-    objectclass: posixGroup
+    objectClass:
+      - posixGroup
+    attributes:
+      cn: saunix
+      gidnumber: 5001
     server_uri:   ldapi:///localhost
     bind_dn: "{{ openldap_bind_id }}"
     bind_pw: "{{ openldap_admin_password }}"
@@ -69,14 +71,16 @@
   ignore_errors: yes  #set to get around erroring out that items already exist
   when: >
         openldap_populate is defined and
-        openldap_populate             
+        openldap_populate
 
-- name: Create saunix group
+- name: Create dba group
   ldap_entry:
     dn: cn=dba,ou=Groups,dc=lanathome,dc=com
-    cn: saunix
-    gidnumber: 5002
-    objectclass: posixGroup
+    objectClass:
+      - posixGroup
+    attributes:
+      cn: saunix
+      gidnumber: 5001
     server_uri:   ldapi:///localhost
     bind_dn: "{{ openldap_bind_id }}"
     bind_pw: "{{ openldap_admin_password }}"
@@ -84,14 +88,16 @@
   ignore_errors: yes  #set to get around erroring out that items already exist
   when: >
         openldap_populate is defined and
-        openldap_populate     
+        openldap_populate
 
-- name: Create saunix group
+- name: Create middleware group
   ldap_entry:
     dn: cn=middleware,ou=Groups,dc=lanathome,dc=com
-    cn: saunix
-    gidnumber: 5003
-    objectclass: posixGroup
+    objectClass:
+      - posixGroup
+    attributes:
+      cn: saunix
+      gidnumber: 5001
     server_uri:   ldapi:///localhost
     bind_dn: "{{ openldap_bind_id }}"
     bind_pw: "{{ openldap_admin_password }}"
@@ -99,7 +105,28 @@
   ignore_errors: yes  #set to get around erroring out that items already exist
   when: >
         openldap_populate is defined and
-        openldap_populate     
+        openldap_populate
 
-
-
+- name: Create user ngr
+  ldap_entry:
+    dn: uid=aurelien,ou=People,dc=lanathome,dc=com
+    objectClass:
+      - inetOrgPerson
+      - posixAccount
+      - shadowAccount
+    attributes:
+      cn: ngr
+      displayname: Aurelien Grosshans
+      gecos: Aurelien Grosshans
+      gidnumber: 5001
+      givenname: Aurelien
+      homedirectory: /home/ngr
+      loginshell: /bin/bash
+      sn: Grosshans
+      uid: ngr
+      uidnumber: 10001
+      userpassword: 4eathqme!
+    ignore_errors: yes  #set to get around erroring out that items already exist
+    when: >
+          openldap_populate is defined and
+          openldap_populate
