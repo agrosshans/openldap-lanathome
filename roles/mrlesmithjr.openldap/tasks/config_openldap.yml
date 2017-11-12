@@ -34,4 +34,5 @@
   ldap_entry:
     dn: ou=People,dc=lanathome,dc=com
     objectClass: organizationalUnit
+    server_uri:   ldapi:///localhost
     state: present
