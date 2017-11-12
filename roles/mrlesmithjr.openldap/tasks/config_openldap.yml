@@ -29,3 +29,9 @@
   when: >
         openldap_populate is defined and
         openldap_populate
+
+- name: Make sure we have a parent entry for users
+  ldap_entry:
+    dn: ou=People,dc=lanathome,dc=com
+    objectClass: organizationalUnit
+    state: present
