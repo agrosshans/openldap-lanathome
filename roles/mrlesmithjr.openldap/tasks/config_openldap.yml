@@ -23,13 +23,6 @@
     group: root
     mode: 0640
 
-#- name: config_openldap | populating openLDAP
-#  shell: 'ldapadd -x -D {{ openldap_bind_id }} -w {{ openldap_admin_password }} -f /etc/ldap/slapd.d/populate_content.ldif'
-#  ignore_errors: yes  #set to get around erroring out that items already exist
-#  when: >
-#        openldap_populate is defined and
-#        openldap_populate
-
 - name: Make sure we have a parent entry for users
   ldap_entry:
     dn: ou=People,dc=lanathome,dc=com
@@ -54,7 +47,7 @@
   ignore_errors: yes  #set to get around erroring out that items already exist
   when: >
         openldap_populate is defined and
-        openldap_populate                                                                                                                                                                                    40,1          Bot
+        openldap_populate                                                                                                                                                                              40,1          Bot
 
 - name: Create saunix group
   ldap_entry:
@@ -126,7 +119,7 @@
       uid: ngr
       uidnumber: 10001
       userpassword: 4eathqme!
-    ignore_errors: yes  #set to get around erroring out that items already exist
-    when: >
-          openldap_populate is defined and
-          openldap_populate
+  ignore_errors: yes  #set to get around erroring out that items already exist
+  when: >
+        openldap_populate is defined and
+        openldap_populate
