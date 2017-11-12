@@ -104,6 +104,26 @@
         openldap_populate is defined and
         openldap_populate
 
+- name: Create SUDOers
+  ldap_entry:
+    dn: ou=SUDOers,dc=example,dc=com
+    objectClass: 
+      - top
+      - organizationalUnit
+    attributes:    
+      ou: SUDOers
+    server_uri:   ldapi:///localhost
+    bind_dn: "{{ openldap_bind_id }}"
+    bind_pw: "{{ openldap_admin_password }}"
+    state: present
+  ignore_errors: yes  #set to get around erroring out that items already exist
+  when: >
+        openldap_populate is defined and
+        openldap_populate
+
+
+
+
 - name: Create user ngr
   ldap_entry:
     dn: uid=ngr,ou=People,dc=lanathome,dc=com
