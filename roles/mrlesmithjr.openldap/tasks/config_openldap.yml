@@ -39,7 +39,8 @@
 - name: Make sure we have a parent entry for groups
   ldap_entry:
     dn: ou=Groups,dc=lanathome,dc=com
-    objectClass: organizationalUnit
+    objectClass:
+      - organizationalUnit
     server_uri:   ldapi:///localhost
     bind_dn: "{{ openldap_bind_id }}"
     bind_pw: "{{ openldap_admin_password }}"
