@@ -11,6 +11,7 @@ elif [ -f /etc/redhat-release ]; then
   yum install -y epel-release
   yum install -y git python-pip python-devel python-dnf
 fi
-sudo pip install ansible
+
+sudo apt-get upgrade -y ansible
 cd /vagrant ; git clone https://github.com/agrosshans/openldap-lanathome.git
 ansible-playbook -i "localhost," -c local /vagrant/ansible-playbook.yml
