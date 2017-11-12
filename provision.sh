@@ -3,7 +3,7 @@ if [ -f /etc/debian_version ]; then
   sudo apt-get install -y git python-pip python-dev
   sudo apt-get install software-properties-common
   sudo apt-add-repository ppa:ansible/ansible
-  sudo apt-get install ansible
+  sudo apt-get --assume-yes install ansible
   sleep 10
   sudo apt-get update
 elif [ -f /etc/redhat-release ]; then
