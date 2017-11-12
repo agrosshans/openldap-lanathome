@@ -36,7 +36,7 @@
         openldap_populate is defined and
         openldap_populate
 
-- name: Make sure we have a parent entry for users
+- name: Make sure we have a parent entry for groups
   ldap_entry:
     dn: ou=Groups,dc=lanathome,dc=com
     objectClass: organizationalUnit
@@ -102,7 +102,7 @@
 
 - name: Create user ngr
   ldap_entry:
-    dn: uid=aurelien,ou=People,dc=lanathome,dc=com
+    dn: uid=ngr,ou=People,dc=lanathome,dc=com
     objectClass:
       - inetOrgPerson
       - posixAccount
