@@ -275,7 +275,8 @@
     mode: 0644
 
 - name: Config TLS - 
-  user: openldap
+  user: 
+    name: openldap
     groups: ssl-cert
     append: yes
 
@@ -305,7 +306,7 @@
   service:
     name: slapd
     state: restarted
-    
+
 - name: Create SUDOers
   ldap_entry:
     dn: ou=SUDOers,dc=lanathome,dc=com
