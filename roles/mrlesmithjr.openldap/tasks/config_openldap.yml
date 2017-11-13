@@ -226,6 +226,74 @@
     name: ssl-cert
     state: present
 
+- name: Config TLS - import cakey.pem
+  copy:
+    src: files/cakey.pem
+    dest: /etc/ssl/private/cakey.pem
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Config TLS - import ca.info
+  copy:
+    src: files/ca.info
+    dest: /etc/ssl/ca.info
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Config TLS - import auto-signed certificate
+  copy:
+    src: files/cacert.pem
+    dest: /etc/ssl/certs/cacert.pem
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Config TLS - import private key
+  copy:
+    src: files/ldap01_slapd_key.pem
+    dest: /etc/ssl/private/ldap01_slapd_key.pem
+    owner: root
+    group: root
+    mode: 0640
+
+- name: Config TLS - import ldap01.info
+  copy:
+    src: files/ldap01.info
+    dest: /etc/ssl/ldap01.info
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Config TLS - import the certificate
+  copy:
+    src: files/ldap01_slapd_cert.pem
+    dest: /etc/ssl/certs/ldap01_slapd_cert.pem
+    owner: root
+    group: openldap
+    mode: 0644
+
+- name: Config TLS - 
+  user: openldap
+    groups: ssl-cert
+    append: yes
+
+- name: Config TLS - import certinfo.ldif
+  copy:
+    src: files/certinfo.ldif
+    dest: /etc/ldap/certinfo.ldif
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Config TLS - finally modify openldap to include TLS
+  shell: sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/certinfo.ldif
+
+- name: Config TLS - restart openldap
+  service:
+    name: slapd
+    state: restarted
 
 - name: Create SUDOers
   ldap_entry:
