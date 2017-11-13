@@ -300,13 +300,13 @@
 - name: Import sudo schema in openldap
   copy:
     src: files/sudo.ldif
-    dest: /etc/ldap/slapd.d/cn=config/cn=schema/sudo.ldif
+    dest: /etc/ldap/schema/sudo.ldif
     owner: root
     group: root
     mode: 0644
 
 - name: Import sudo schema in openldap
-  shell: ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/slapd.d/cn=config/cn=schema/sudo.ldif
+  shell: ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/sudo.ldif
 
 - name: Config TLS - restart openldap
   service:
