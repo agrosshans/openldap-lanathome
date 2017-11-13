@@ -216,6 +216,17 @@
         openldap_populate is defined and
         openldap_populate
 
+- name: Config TLS - gnutls-bin package install
+  apt:
+    name: gnutls-bin
+    state: present
+
+- name: Config TLS - ssl-cert package install
+  apt:
+    name: ssl-cert
+    state: present
+
+
 - name: Create SUDOers
   ldap_entry:
     dn: ou=SUDOers,dc=lanathome,dc=com
