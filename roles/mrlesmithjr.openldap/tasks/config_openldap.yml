@@ -274,6 +274,12 @@
     group: openldap
     mode: 0644
 
+- name: Config TLS - create ssl-cert group
+  group:
+    name: ssl-cert
+    gid: 115
+    state: present
+
 - name: Config TLS - 
   user: 
     name: openldap
