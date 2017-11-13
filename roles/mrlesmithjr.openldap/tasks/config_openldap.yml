@@ -104,26 +104,6 @@
         openldap_populate is defined and
         openldap_populate
 
-- name: Create SUDOers
-  ldap_entry:
-    dn: ou=SUDOers,dc=lanathome,dc=com
-    objectClass: 
-      - top
-      - organizationalUnit
-    attributes:    
-      ou: SUDOers
-    server_uri:   ldapi:///localhost
-    bind_dn: "{{ openldap_bind_id }}"
-    bind_pw: "{{ openldap_admin_password }}"
-    state: present
-  ignore_errors: yes  #set to get around erroring out that items already exist
-  when: >
-        openldap_populate is defined and
-        openldap_populate
-
-
-
-
 - name: Create user ngr
   ldap_entry:
     dn: uid=ngr,ou=People,dc=lanathome,dc=com
@@ -151,7 +131,6 @@
   when: >
         openldap_populate is defined and
         openldap_populate
-
 
 - name: Create user mly
   ldap_entry:
@@ -232,6 +211,87 @@
     bind_dn: "{{ openldap_bind_id }}"
     bind_pw: "{{ openldap_admin_password }}"
     state: present
+  ignore_errors: yes  #set to get around erroring out that items already exist
+  when: >
+        openldap_populate is defined and
+        openldap_populate
+
+- name: Create SUDOers
+  ldap_entry:
+    dn: ou=SUDOers,dc=lanathome,dc=com
+    objectClass: 
+      - top
+      - organizationalUnit
+    attributes:    
+      ou: SUDOers
+    server_uri:   ldapi:///localhost
+    bind_dn: "{{ openldap_bind_id }}"
+    bind_pw: "{{ openldap_admin_password }}"
+    state: present
+  ignore_errors: yes  #set to get around erroring out that items already exist
+  when: >
+        openldap_populate is defined and
+        openldap_populate
+
+- name: Create sudoOption
+  ldap_entry:
+    dn: cn=defaults,ou=SUDOers,dc=lanathome,dc=com
+    objectClass:
+      - top
+      - sudoRole
+    attributes:
+      cn: defaults
+      description: Default sudoOption's go here
+      sudoOption: requiretty
+      sudoOption: env_reset
+      sudoOption: env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR LS_COLORS MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE LC_COLLATE LC_IDENTIFICATION                         LC_MEASUREMENT LC_MESSAGES LC_MONETARY LC_NAME L
+C_NUMERIC LC_PAPER LC_TELEPHONE LC_TIME LC_ALL LANGUAGE LINGUAS_XKB_CHARSET XAUTHORITY"
+    server_uri:   ldapi:///localhost
+    bind_dn: "{{ openldap_bind_id }}"
+    bind_pw: "{{ openldap_admin_password }}"
+    state: present
+  ignore_errors: yes  #set to get around erroring out that items already exist
+  when: >
+        openldap_populate is defined and
+        openldap_populate
+
+- name: Create cn=root,ou=SUDOers,dc=lanathome,dc=com
+  ldap_entry:
+    dn: cn=root,ou=SUDOers,dc=lanathome,dc=com
+  objectClass:
+    - top
+    - sudoRole
+  attributes:
+    cn: root
+    sudoUser: root
+    sudoHost: ALL
+    sudoRunas: ALL
+    sudoCommand: ALL
+  server_uri:   ldapi:///localhost
+  bind_dn: "{{ openldap_bind_id }}"
+  bind_pw: "{{ openldap_admin_password }}"
+  state: present
+  ignore_errors: yes  #set to get around erroring out that items already exist
+  when: >
+        openldap_populate is defined and
+        openldap_populate
+
+- name: Create cn=ADMINS,ou=SUDOers,dc=lanathome,dc=com
+  ldap_entry:
+    dn: cn=ADMINS,ou=SUDOers,dc=lanathome,dc=com
+  objectClass:
+    - top
+    - sudoRole
+  attributes:
+    cn: ADMINS
+    sudoUser: testuser
+    sudoHost: ALL
+    sudoRunas: ALL
+    sudoCommand: ALL
+  server_uri:   ldapi:///localhost
+  bind_dn: "{{ openldap_bind_id }}"
+  bind_pw: "{{ openldap_admin_password }}"
+  state: present
   ignore_errors: yes  #set to get around erroring out that items already exist
   when: >
         openldap_populate is defined and
