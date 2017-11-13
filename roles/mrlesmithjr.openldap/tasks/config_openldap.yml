@@ -288,13 +288,24 @@
     mode: 0644
 
 - name: Config TLS - finally modify openldap to include TLS
-  shell: sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/certinfo.ldif
+  shell: ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/certinfo.ldif
+
+- name: Import sudo schema in openldap
+  copy:
+    src: files/sudo.ldif
+    dest: /etc/ldap/slapd.d/cn=config/cn=schema/sudo.ldif
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Import sudo schema in openldap
+  shell: ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/slapd.d/cn=config/cn=schema/sudo.ldif
 
 - name: Config TLS - restart openldap
   service:
     name: slapd
     state: restarted
-
+    
 - name: Create SUDOers
   ldap_entry:
     dn: ou=SUDOers,dc=lanathome,dc=com
