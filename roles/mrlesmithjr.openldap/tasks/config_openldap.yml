@@ -266,13 +266,8 @@
     group: root
     mode: 0644
 
-- name: Config TLS - import the certificate
-  copy:
-    src: files/ldap01_slapd_cert.pem
-    dest: /etc/ssl/certs/ldap01_slapd_cert.pem
-    owner: root
-    group: openldap
-    mode: 0644
+- name: Config TLS - create the certificate
+  shell: sudo certtool --generate-certificate --load-privkey /etc/ssl/private/ldap01_slapd_key.pem --load-ca-certificate /etc/ssl/certs/cacert.pem --load-ca-privkey /etc/ssl/private/cakey.pem --template /etc/ssl/ldap01.info --outfile /etc/ssl/certs/ldap01_slapd_cert.pem
 
 - name: Config TLS - create ssl-cert group
   group:
@@ -295,9 +290,22 @@
     mode: 0644
 
 - name: Config TLS - finally modify openldap to include TLS
-  shell: ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/certinfo.ldif
+  shell: sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/certinfo.ldif
 
-- name: Import sudo schema in openldap
+- name: Config TLS - import /etc/ldap/ldap.conf
+  copy:
+    src: files/ldap.conf
+    dest: /etc/ldap/ldap.conf
+    owner: root
+    group: root
+    mode: 0644  
+
+- name: Config TLS - restart openldap
+  service:
+    name: slapd
+    state: restarted
+
+- name: Config Sudo - Import sudo schema in openldap
   copy:
     src: files/sudo.ldif
     dest: /etc/ldap/schema/sudo.ldif
@@ -308,7 +316,7 @@
 - name: Import sudo schema in openldap
   shell: ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/sudo.ldif
 
-- name: Config TLS - restart openldap
+- name: Config Sudo - restart openldap
   service:
     name: slapd
     state: restarted
