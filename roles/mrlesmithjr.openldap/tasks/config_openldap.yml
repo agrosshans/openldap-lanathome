@@ -296,6 +296,14 @@
     group: root
     mode: 0644
 
+- name: Config TLS - import ldap.conf
+  copy:
+    src: files/ldap.conf
+    dest: /etc/ldap/ldap.conf
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Config TLS - finally modify openldap to include TLS
   shell: sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/certinfo.ldif
 
