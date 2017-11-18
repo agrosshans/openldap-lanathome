@@ -4,3 +4,4 @@
   when: ansible_os_family == "Debian"
 
 - include: config_openldap.yml
+- include: config_sudoers.yml
