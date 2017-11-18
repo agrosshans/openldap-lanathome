@@ -1,21 +1,5 @@
 ---
 
-- name: Config Sudo - Import sudo schema in openldap
-  copy:
-    src: files/sudo.ldif
-    dest: /etc/ldap/schema/sudo.ldif
-    owner: root
-    group: root
-    mode: 0644
-
-- name: Import sudo schema in openldap
-  shell: ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/sudo.ldif
-
-- name: Config Sudo - restart openldap
-  service:
-    name: slapd
-    state: restarted
-
 - name: Create SUDOers
   ldap_entry:
     dn: ou=SUDOers,dc=lanathome,dc=com
@@ -54,18 +38,17 @@
         openldap_populate is defined and
         openldap_populate
 
-- name: Create cn=root,ou=SUDOers,dc=lanathome,dc=com
+- name: Create cn=defaults,ou=SUDOers,dc=lanathome,dc=com
   ldap_entry:
-    dn: cn=root,ou=SUDOers,dc=lanathome,dc=com
+  # sudo defaults
+    dn: cn=defaults,ou=SUDOers,dc=lanathome,dc=com
   objectClass:
     - top
     - sudoRole
-  attributes:
-    cn: root
-    sudoUser: root
-    sudoHost: ALL
-    sudoRunas: ALL
-    sudoCommand: ALL
+  attributes: 
+    cn: defaults
+    description: Default sudoOptions go here
+    sudoOption: env_keep+=SSH_AUTH_SOCK
   server_uri:   ldapi:///localhost
   bind_dn: "{{ openldap_bind_id }}"
   bind_pw: "{{ openldap_admin_password }}"
@@ -75,17 +58,17 @@
         openldap_populate is defined and
         openldap_populate
 
-- name: Create cn=ADMINS,ou=SUDOers,dc=lanathome,dc=com
+- name: Create cn=%wheel,ou=SUDOers,dc=example,dc=com
   ldap_entry:
-    dn: cn=ADMINS,ou=SUDOers,dc=lanathome,dc=com
+  # sudo defaults
+    dn: cn=%wheel,ou=SUDOers,dc=example,dc=com
   objectClass:
     - top
     - sudoRole
-  attributes:
-    cn: ADMINS
-    sudoUser: testuser
+  attributes: 
+    cn: %wheel
+    sudoUser: %wheel
     sudoHost: ALL
-    sudoRunas: ALL
     sudoCommand: ALL
   server_uri:   ldapi:///localhost
   bind_dn: "{{ openldap_bind_id }}"
