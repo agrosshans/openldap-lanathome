@@ -58,15 +58,15 @@
         openldap_populate is defined and
         openldap_populate
 
-- name: Create cn=%wheel,ou=SUDOers,dc=example,dc=com
+- name: Create cn=%wheel,ou=SUDOers,dc=lanathome,dc=com
   ldap_entry:
   # sudo defaults
-    dn: cn=%wheel,ou=SUDOers,dc=example,dc=com
+    dn: cn=%wheel,ou=SUDOers,dc=lanathome,dc=com
   objectClass:
     - top
     - sudoRole
   attributes: 
-    cn: %wheel
+    cn: "%wheel"
     sudoUser: %wheel
     sudoHost: ALL
     sudoCommand: ALL
