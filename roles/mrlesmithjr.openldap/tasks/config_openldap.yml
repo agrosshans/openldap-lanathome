@@ -306,7 +306,8 @@
 
 - name: Config TLS - finally modify openldap to include TLS
   shell: sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/certinfo.ldif
-
+  ignore_errors: yes 
+  
 - name: Config TLS - restart openldap
   service:
     name: slapd
