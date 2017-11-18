@@ -122,7 +122,7 @@
       sn: Grosshans
       uid: ngr
       uidnumber: 10001
-      userpassword: 4eathqme!
+      userpassword: changeme
     server_uri:   ldapi:///localhost
     bind_dn: "{{ openldap_bind_id }}"
     bind_pw: "{{ openldap_admin_password }}"
@@ -150,7 +150,7 @@
       sn: Leroy
       uid: mly
       uidnumber: 10002
-      userpassword: 4eathqme!
+      userpassword: changeme
     server_uri:   ldapi:///localhost
     bind_dn: "{{ openldap_bind_id }}"
     bind_pw: "{{ openldap_admin_password }}"
@@ -178,7 +178,7 @@
       sn: Grosshans
       uid: mgr
       uidnumber: 10003
-      userpassword: 4eathqme!
+      userpassword: changeme
     server_uri:   ldapi:///localhost
     bind_dn: "{{ openldap_bind_id }}"
     bind_pw: "{{ openldap_admin_password }}"
@@ -206,7 +206,7 @@
       sn: Grosshans
       uid: lgr
       uidnumber: 10004
-      userpassword: 4eathqme!
+      userpassword: changeme
     server_uri:   ldapi:///localhost
     bind_dn: "{{ openldap_bind_id }}"
     bind_pw: "{{ openldap_admin_password }}"
@@ -289,114 +289,114 @@
     group: root
     mode: 0644
 
-- name: Config TLS - finally modify openldap to include TLS
-  shell: sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/certinfo.ldif
+#- name: Config TLS - finally modify openldap to include TLS
+#  shell: sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/certinfo.ldif
 
-- name: Config TLS - import /etc/ldap/ldap.conf
-  copy:
-    src: files/ldap.conf
-    dest: /etc/ldap/ldap.conf
-    owner: root
-    group: root
-    mode: 0644  
+#- name: Config TLS - import /etc/ldap/ldap.conf
+#  copy:
+#    src: files/ldap.conf
+#    dest: /etc/ldap/ldap.conf
+#    owner: root
+#    group: root
+#    mode: 0644  
 
-- name: Config TLS - restart openldap
-  service:
-    name: slapd
-    state: restarted
+# - name: Config TLS - restart openldap
+#   service:
+#     name: slapd
+#     state: restarted
 
-- name: Config Sudo - Import sudo schema in openldap
-  copy:
-    src: files/sudo.ldif
-    dest: /etc/ldap/schema/sudo.ldif
-    owner: root
-    group: root
-    mode: 0644
+# - name: Config Sudo - Import sudo schema in openldap
+#   copy:
+#     src: files/sudo.ldif
+#     dest: /etc/ldap/schema/sudo.ldif
+#     owner: root
+#     group: root
+#     mode: 0644
 
-- name: Import sudo schema in openldap
-  shell: ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/sudo.ldif
+# - name: Import sudo schema in openldap
+#   shell: ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/ldap/schema/sudo.ldif
 
-- name: Config Sudo - restart openldap
-  service:
-    name: slapd
-    state: restarted
+# - name: Config Sudo - restart openldap
+#   service:
+#     name: slapd
+#     state: restarted
 
-- name: Create SUDOers
-  ldap_entry:
-    dn: ou=SUDOers,dc=lanathome,dc=com
-    objectClass: 
-      - top
-      - organizationalUnit
-    attributes:    
-      ou: SUDOers
-    server_uri:   ldapi:///localhost
-    bind_dn: "{{ openldap_bind_id }}"
-    bind_pw: "{{ openldap_admin_password }}"
-    state: present
-  ignore_errors: yes  #set to get around erroring out that items already exist
-  when: >
-        openldap_populate is defined and
-        openldap_populate
+# - name: Create SUDOers
+#   ldap_entry:
+#     dn: ou=SUDOers,dc=lanathome,dc=com
+#     objectClass: 
+#       - top
+#       - organizationalUnit
+#     attributes:    
+#       ou: SUDOers
+#     server_uri:   ldapi:///localhost
+#     bind_dn: "{{ openldap_bind_id }}"
+#     bind_pw: "{{ openldap_admin_password }}"
+#     state: present
+#   ignore_errors: yes  #set to get around erroring out that items already exist
+#   when: >
+#         openldap_populate is defined and
+#         openldap_populate
 
-- name: Create sudoOption
-  ldap_entry:
-    dn: cn=defaults,ou=SUDOers,dc=lanathome,dc=com
-    objectClass:
-      - top
-      - sudoRole
-    attributes:
-      cn: defaults
-      description: Default sudoOption's go here
-      sudoOption: requiretty
-      sudoOption: env_reset
-      sudoOption: env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR LS_COLORS MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE LC_TIME LC_ALL LANGUAGE LINGUAS_XKB_CHARSET XAUTHORITY"
-    server_uri:   ldapi:///localhost
-    bind_dn: "{{ openldap_bind_id }}"
-    bind_pw: "{{ openldap_admin_password }}"
-    state: present
-  ignore_errors: yes  #set to get around erroring out that items already exist
-  when: >
-        openldap_populate is defined and
-        openldap_populate
+# - name: Create sudoOption
+#   ldap_entry:
+#     dn: cn=defaults,ou=SUDOers,dc=lanathome,dc=com
+#     objectClass:
+#       - top
+#       - sudoRole
+#     attributes:
+#       cn: defaults
+#       description: Default sudoOption's go here
+#       sudoOption: requiretty
+#       sudoOption: env_reset
+#       sudoOption: env_keep = "COLORS DISPLAY HOSTNAME HISTSIZE INPUTRC KDEDIR LS_COLORS MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE LC_TIME LC_ALL LANGUAGE LINGUAS_XKB_CHARSET XAUTHORITY"
+#     server_uri:   ldapi:///localhost
+#     bind_dn: "{{ openldap_bind_id }}"
+#     bind_pw: "{{ openldap_admin_password }}"
+#     state: present
+#   ignore_errors: yes  #set to get around erroring out that items already exist
+#   when: >
+#         openldap_populate is defined and
+#         openldap_populate
 
-- name: Create cn=root,ou=SUDOers,dc=lanathome,dc=com
-  ldap_entry:
-    dn: cn=root,ou=SUDOers,dc=lanathome,dc=com
-  objectClass:
-    - top
-    - sudoRole
-  attributes:
-    cn: root
-    sudoUser: root
-    sudoHost: ALL
-    sudoRunas: ALL
-    sudoCommand: ALL
-  server_uri:   ldapi:///localhost
-  bind_dn: "{{ openldap_bind_id }}"
-  bind_pw: "{{ openldap_admin_password }}"
-  state: present
-  ignore_errors: yes  #set to get around erroring out that items already exist
-  when: >
-        openldap_populate is defined and
-        openldap_populate
+# - name: Create cn=root,ou=SUDOers,dc=lanathome,dc=com
+#   ldap_entry:
+#     dn: cn=root,ou=SUDOers,dc=lanathome,dc=com
+#   objectClass:
+#     - top
+#     - sudoRole
+#   attributes:
+#     cn: root
+#     sudoUser: root
+#     sudoHost: ALL
+#     sudoRunas: ALL
+#     sudoCommand: ALL
+#   server_uri:   ldapi:///localhost
+#   bind_dn: "{{ openldap_bind_id }}"
+#   bind_pw: "{{ openldap_admin_password }}"
+#   state: present
+#   ignore_errors: yes  #set to get around erroring out that items already exist
+#   when: >
+#         openldap_populate is defined and
+#         openldap_populate
 
-- name: Create cn=ADMINS,ou=SUDOers,dc=lanathome,dc=com
-  ldap_entry:
-    dn: cn=ADMINS,ou=SUDOers,dc=lanathome,dc=com
-  objectClass:
-    - top
-    - sudoRole
-  attributes:
-    cn: ADMINS
-    sudoUser: testuser
-    sudoHost: ALL
-    sudoRunas: ALL
-    sudoCommand: ALL
-  server_uri:   ldapi:///localhost
-  bind_dn: "{{ openldap_bind_id }}"
-  bind_pw: "{{ openldap_admin_password }}"
-  state: present
-  ignore_errors: yes  #set to get around erroring out that items already exist
-  when: >
-        openldap_populate is defined and
-        openldap_populate
+# - name: Create cn=ADMINS,ou=SUDOers,dc=lanathome,dc=com
+#   ldap_entry:
+#     dn: cn=ADMINS,ou=SUDOers,dc=lanathome,dc=com
+#   objectClass:
+#     - top
+#     - sudoRole
+#   attributes:
+#     cn: ADMINS
+#     sudoUser: testuser
+#     sudoHost: ALL
+#     sudoRunas: ALL
+#     sudoCommand: ALL
+#   server_uri:   ldapi:///localhost
+#   bind_dn: "{{ openldap_bind_id }}"
+#   bind_pw: "{{ openldap_admin_password }}"
+#   state: present
+#   ignore_errors: yes  #set to get around erroring out that items already exist
+#   when: >
+#         openldap_populate is defined and
+#         openldap_populate
