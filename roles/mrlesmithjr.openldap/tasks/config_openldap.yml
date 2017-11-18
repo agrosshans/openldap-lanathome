@@ -281,6 +281,13 @@
     groups: ssl-cert
     append: yes
 
+- name: Config TLS - Adjust permissions and ownership
+  file:
+    path: /etc/ssl/private/ldap01_slapd_key.pem
+    owner: root
+    group: openldap
+    mode: 0640
+
 - name: Config TLS - import certinfo.ldif
   copy:
     src: files/certinfo.ldif
@@ -289,21 +296,13 @@
     group: root
     mode: 0644
 
-#- name: Config TLS - finally modify openldap to include TLS
-#  shell: sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/certinfo.ldif
+- name: Config TLS - finally modify openldap to include TLS
+  shell: sudo ldapmodify -Y EXTERNAL -H ldapi:/// -f /etc/ldap/certinfo.ldif
 
-#- name: Config TLS - import /etc/ldap/ldap.conf
-#  copy:
-#    src: files/ldap.conf
-#    dest: /etc/ldap/ldap.conf
-#    owner: root
-#    group: root
-#    mode: 0644  
-
-# - name: Config TLS - restart openldap
-#   service:
-#     name: slapd
-#     state: restarted
+- name: Config TLS - restart openldap
+  service:
+    name: slapd
+    state: restarted
 
 # - name: Config Sudo - Import sudo schema in openldap
 #   copy:
