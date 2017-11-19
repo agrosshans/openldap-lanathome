@@ -11,13 +11,13 @@
 - name: config_sudoers.yml | Import cn={0}sudo.ldif
   copy:
     src: "files/cn={0}sudo.ldif"
-    dest: "/tmp/ldif_output/cn=config/cn=schema/cn={0}sudo.ldif"
+    dest: "/tmp/cn={0}sudo.ldif"
     owner: openldap
     group: openldap
     mode: 0640
 
 - name: config_sudoers.yml | Add sudo schema in ldap config
-  shell: 'ldapadd -Y EXTERNAL -H ldapi:/// -f /tmp/ldif_output/cn=config/cn=schema/cn={0}sudo.ldif'
+  shell: 'ldapadd -Y EXTERNAL -H ldapi:/// -f /tmp/cn={0}sudo.ldif'
   ignore_errors: yes  #set to get around erroring out that items already exist
 
 - name: config_sudoers.yml | Restart openldap
