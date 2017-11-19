@@ -20,7 +20,7 @@
     bind_dn: "{{ openldap_bind_id }}"
     bind_pw: "{{ openldap_admin_password }}"
     state: present
-    start_tls
+    start_tls: yes
   ignore_errors: yes  #set to get around erroring out that items already exist
   when: >
         openldap_populate is defined and
