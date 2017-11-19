@@ -1,5 +1,13 @@
 ---
 
+- name: config_openldap | creating database population config
+  template:
+    src: "etc/ldap/slapd.d/populate_sudoers.ldif.j2"
+    dest: "/etc/ldap/slapd.d/populate_sudoers.ldif"
+    owner: root
+    group: root
+    mode: 0640
+
 - name: config_sudoers.yml | Create ou=SUDOers,dc=lanathome,dc=com
   ldap_entry:
     dn: ou=SUDOers,dc=lanathome,dc=com
