@@ -1,16 +1,16 @@
 ---
 
 - name: config_sudoers.yml | Import sudo.schema
-  template:
-    src: "etc/ldap/sudo.schema"
+  files:
+    src: "files/sudo.schema"
     dest: "/etc/ldap/schema/sudo.schema"
     owner: openldap
     group: openldap
     mode: 0640
 
 - name: config_sudoers.yml | Import cn={0}sudo.ldif
-  template:
-    src: "etc/ldap/cn={0}sudo.ldif"
+  files:
+    src: "files/cn={0}sudo.ldif"
     dest: "/tmp/ldif_output/cn=config/cn=schema/cn={0}sudo.ldif"
     owner: openldap
     group: openldap
