@@ -20,6 +20,11 @@
   shell: 'ldapadd -Y EXTERNAL -H ldapi:/// -f /tmp/ldif_output/cn=config/cn=schema/cn={0}sudo.ldif'
   ignore_errors: yes  #set to get around erroring out that items already exist
 
+- name: config_sudoers.yml | Restart openldap
+  service:
+    name: slapd
+    state: restarted
+
 - name: config_sudoers.yml | creating database population config
   template:
     src: "etc/ldap/slapd.d/populate_sudoers.ldif.j2"
