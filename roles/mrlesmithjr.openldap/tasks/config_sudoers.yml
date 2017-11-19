@@ -1,6 +1,6 @@
 ---
 
-- name: config_openldap | creating database population config
+- name: config_sudoers.yml | creating database population config
   template:
     src: "etc/ldap/slapd.d/populate_sudoers.ldif.j2"
     dest: "/etc/ldap/slapd.d/populate_sudoers.ldif"
